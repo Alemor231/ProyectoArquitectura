@@ -3,17 +3,13 @@ const db = require("./db");
 
 // Define express app
 const app = express();
-const port = 3000;
+const port = 4000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
 
 // Routes
 app.get("/api/ping", (req, res) => res.json({ message: "pong" }));
-app.get("/api/greet", (req, res) => {
-  const name = req.query.name || "World";
-  res.json({ message: `Hello, ${name}!` });
-});
 app.get("/api/students", async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM students");
@@ -23,6 +19,9 @@ app.get("/api/students", async (req, res) => {
     res.status(500).send("DB error");
   }
 });
-
+app.get("/api/greet", (req, res) => {
+  const name = req.query.name || "Mundo";
+  res.json({ message: `¡Hola, ${name}!` });
+});
 // Start the server
 app.listen(port, () => console.log(`App running on port ${port}`));
